@@ -1,0 +1,16 @@
+[
+{
+  "modid": "duelarena",
+  "name": "DuelArena",
+  "description": "Duel Arena for server.",
+  "version": "0.1",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["flametaichou"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
