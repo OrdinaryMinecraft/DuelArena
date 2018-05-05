@@ -18,6 +18,12 @@ public class ConfigHelper {
     public static int spectator_y;
     public static int spectator_z;
 
+    public static int arena_x1;
+    public static int arena_z1;
+    public static int arena_x2;
+    public static int arena_z2;
+
+
     public static List<String> availableWorlds;
     public static String arena_world;
 
@@ -40,6 +46,11 @@ public class ConfigHelper {
             timeout = config.getInt("Timeout", "Settings", 60, 10 ,9999, "Timeout between requests");
             spectator_x = config.getInt("Spectator X", "Settings", 0, -99999, 99999, "Spectator Position X");
             spectator_y = config.getInt("Spectator Y", "Settings", 0, -99999, 99999, "Spectator Position Y");
+            arena_x1 = config.getInt("Arena X1", "Settings", 0, -99999, 99999, "Arena Position X1");
+            arena_z1 = config.getInt("Arena Z1", "Settings", 0, -99999, 99999, "Arena Position Z1");
+            arena_x2 = config.getInt("Arena X2", "Settings", 0, -99999, 99999, "Arena Position X2");
+            arena_z2 = config.getInt("Arena Z2", "Settings", 0, -99999, 99999, "Arena Position Z2");
+
             spectator_z = config.getInt("Spectator Z", "Settings", 0, -99999, 99999, "Spectator Position Z");
 
             availableWorlds = Arrays.asList(config.getStringList("Alailable Worlds IDs", "Lists", new String[]{"0", "1", "-1"}, "Worlds IDs where mod will search players for duel"));

@@ -12,6 +12,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import ru.flametaichou.duelarena.DuelArena;
 import ru.flametaichou.duelarena.Model.ArenaPoint;
+import ru.flametaichou.duelarena.Util.DatabaseHelper;
 
 public class DuelArenaAdminCommands extends CommandBase
 {
@@ -68,10 +69,10 @@ public class DuelArenaAdminCommands extends CommandBase
             if (argString[0].equals("listpoints")) {
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
-                    List<ArenaPoint> arenaPoints = DuelArena.database.fetchAllArenaPoints();
+                    List<ArenaPoint> arenaPoints = DatabaseHelper.fetchAllArenaPoints();
                     sender.addChatMessage(new ChatComponentTranslation("listpoints.message"));
                     for (ArenaPoint point : arenaPoints) {
-                        sender.addChatMessage(new ChatComponentTranslation("ID: "+point.getId()+", X:"+point.getX()+", Y:"+point.getY()+", Z:"+point.getZ()));
+                        sender.addChatMessage(new ChatComponentTranslation("ID: "+point.getId()+", X:"+point.x+", Y:"+point.y+1+", Z:"+point.z));
                     }
                 }
                 return;
@@ -82,7 +83,7 @@ public class DuelArenaAdminCommands extends CommandBase
                     int player_x = (int) player.posX;
                     int player_y = (int) player.posY;
                     int player_z = (int) player.posZ;
-                    DuelArena.database.addArenaPoint(player_x, player_y, player_z);
+                    DatabaseHelper.addArenaPoint(player_x, player_y, player_z);
                     sender.addChatMessage(new ChatComponentTranslation("addpoint.done"));
                 }
                 return;
@@ -99,7 +100,7 @@ public class DuelArenaAdminCommands extends CommandBase
                         sender.addChatMessage(new ChatComponentTranslation("removepoint.noid"));
                         return;
                     }
-                    DuelArena.database.removeArenaPoint(id);
+                    DatabaseHelper.removeArenaPoint(id);
                     sender.addChatMessage(new ChatComponentTranslation("removepoint.done"));
                 }
                 return;

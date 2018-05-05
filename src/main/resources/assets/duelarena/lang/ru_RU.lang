@@ -1,18 +1,22 @@
-duel.points.your=У вас %d очков чести
-duel.points.none=Игрок не найден
-duel.points.another=У %s %d очков чести
-duel.player.none=Игрок не найден
-duel.player.sent=Вызов на дуэль отправлен! Ожидается ответ в течение 1 минуты.
-duel.player.recieve=Вы получили вызов на дуэль. Введите /duel yes чтобы согласиться или /duel no чтобы отказаться. Ожидается ответ в течение 1 минуты.
-duel.player.arenabusy=Арена в данный момент занята.
-duelarena.request.sent=Игрок %s вызвал на дуэль %s!
-duelarena.request.denied=Игрок %s отказался от дуэли с %s. Он получает -10 очков чести.
-duelarena.request.accepted=Игрок %s согласился на дуэль с %s! Дуэль состоится прямо сейчас!
-duelarena.request.accepted2=Вы можете наблюдать за дуэлью, прописав /duel spectate
+duel.points.your=[§2Очки чести§f] §7У вас §f%d§7 очков чести
+duel.points.none=§8Игрок не найден
+duel.points.top=[§2Дуэль§f] Топ-10 дуэлянтов (очки чести):
+duel.points.another=[§2Очки чести§f] §7У §3%s§7 §f%d§7 очков чести
+duel.player.none=§8Игрок не найден
+duel.player.sent=§7Вызов на дуэль отправлен! Ожидается ответ в течение §f1 минуты§7.
+duel.player.recieve=§7Вы получили вызов на дуэль. Введите §3/duel yes§7 чтобы согласиться или §3/duel no§7 чтобы отказаться. Ожидается ответ в течение §f1 минуты§7.
+duel.player.arenabusy=§8Арена в данный момент занята.
+duelarena.request.sent=[§2Дуэль§f] Игрок §b%s§f бросил вызов §b%s§f!
+duelarena.request.denied=[§2Дуэль§f] Игрок §b%s§f отказался от дуэли с §b%s§f. Он получает §c-10 очков чести§f.
+duelarena.request.accepted=[§2Дуэль§f] Игрок §b%s§f согласился на дуэль с §b%s§f! Дуэль состоится прямо сейчас!
+duelarena.request.accepted2=§7Вы можете наблюдать за дуэлью, прописав §3/duel spectate
+duelarena.return=§7Игрок §3%s§7 попытался сбежать, но был возвращен на арену.
 listpoints.message=Точки арены:
 addpoint.done=Точка добавлена
 removepoint.noid=ID не указан
 removepoint.done=Точка удалена
-duelarena.win=В дуэли одержал победу %s! Он получает +25 очков чести.
-duelarena.loose=Проигравший %s получает +5 очков чести.
-duelarena.logout=%s сбежал с арены.
+duelarena.win=[§2Дуэль§f] В дуэли одержал победу §b%s§f! Он получает §a+25 очков чести§f.
+duelarena.loose=§7Проигравший §3%s§7 получает §2+5 очков чести§7. Арена будет очищена в течение 10 секунд.
+duelarena.logout=§3%s§7 сбежал с арены. Арена будет очищена в течение 10 секунд.
+
+

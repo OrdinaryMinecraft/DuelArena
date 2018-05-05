@@ -2,9 +2,7 @@ package ru.flametaichou.duelarena.Model;
 
 import net.minecraft.world.World;
 
-import javax.vecmath.Point3d;
-
-public class Coordinates extends Point3d {
+public class Coordinates extends Point3D {
 
     private World world;
 

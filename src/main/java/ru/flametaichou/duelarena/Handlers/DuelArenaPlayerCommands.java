@@ -23,7 +23,9 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.DimensionManager;
 import ru.flametaichou.duelarena.DuelArena;
+import ru.flametaichou.duelarena.Model.ArenaPoint;
 import ru.flametaichou.duelarena.Util.ConfigHelper;
+import ru.flametaichou.duelarena.Util.DatabaseHelper;
 
 public class DuelArenaPlayerCommands extends CommandBase
 { 
@@ -59,7 +61,7 @@ public class DuelArenaPlayerCommands extends CommandBase
     @Override         
     public String getCommandUsage(ICommandSender var1) 
     { 
-        return "/duel <player/points (player)/spectate";
+        return "/duel <(player)/points (player)/top/spectate/yes/no>";
     } 
 
     @Override 
@@ -74,7 +76,7 @@ public class DuelArenaPlayerCommands extends CommandBase
     
         if (!world.isRemote) {
             if (argString.length == 0) {
-                sender.addChatMessage(new ChatComponentText("/duel <player/points (player)/spectate>"));
+                sender.addChatMessage(new ChatComponentText("/duel <(player)/points (player)/top/spectate/yes/no>"));
                 return;
             }
             if (argString[0].equals("points")) {
@@ -82,7 +84,7 @@ public class DuelArenaPlayerCommands extends CommandBase
                     EntityPlayer player = (EntityPlayer) sender;
                     Integer points;
                     if (argString.length < 2) {
-                        points = DuelArena.database.getPlayerPoints(player.getDisplayName());
+                        points = DatabaseHelper.getPlayerPoints(player.getDisplayName());
                         sender.addChatMessage(new ChatComponentTranslation("duel.points.your", points));
                     } else {
                         String anotherPlayerName = argString[1];
@@ -90,7 +92,7 @@ public class DuelArenaPlayerCommands extends CommandBase
                             sender.addChatMessage(new ChatComponentTranslation("duel.points.none"));
                             return;
                         } else {
-                            points = DuelArena.database.getPlayerPoints(anotherPlayerName);
+                            points = DatabaseHelper.getPlayerPoints(anotherPlayerName);
                             sender.addChatMessage(new ChatComponentTranslation("duel.points.another", anotherPlayerName, points));
                         }
                     }
@@ -99,7 +101,9 @@ public class DuelArenaPlayerCommands extends CommandBase
             } else if (argString[0].equals("spectate")) {
                 if (sender instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) sender;
-                    player.setPositionAndUpdate(ConfigHelper.spectator_x, ConfigHelper.spectator_y, ConfigHelper.spectator_z);
+                    if (DuelArena.arena.isDuelTime()) {
+                        DuelArena.arena.teleportToDimension((EntityPlayerMP) player, DuelArena.arena.arenaWorld.provider.dimensionId, ConfigHelper.spectator_x, ConfigHelper.spectator_y, ConfigHelper.spectator_z);
+                    }
                 }
                 return;
             } else if (argString[0].equals("yes")) {
@@ -119,6 +123,16 @@ public class DuelArenaPlayerCommands extends CommandBase
                     return;
                 }
                 return;
+            } else if (argString[0].equals("top")) {
+                if (sender instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) sender;
+                    List<String> honorPoints = DatabaseHelper.fetchTop10HonorPoints();
+                    sender.addChatMessage(new ChatComponentTranslation("duel.points.top"));
+                    for (String playerHonorPoints : honorPoints) {
+                        sender.addChatMessage(new ChatComponentTranslation(playerHonorPoints));
+                    }
+                }
+                return;
             } else {
                 //duel request
                 if (sender instanceof EntityPlayer) {
@@ -131,7 +145,7 @@ public class DuelArenaPlayerCommands extends CommandBase
                             World searchWorld = DimensionManager.getWorld(Integer.parseInt(worldId));
                             if (searchWorld != null && searchWorld.getPlayerEntityByName(secondPlayerName) != null) {
                                 sender.addChatMessage(new ChatComponentTranslation("duel.player.sent"));
-                                EntityPlayerMP secondPlayer = (EntityPlayerMP) world.getPlayerEntityByName(secondPlayerName);
+                                EntityPlayerMP secondPlayer = (EntityPlayerMP) searchWorld.getPlayerEntityByName(secondPlayerName);
                                 secondPlayer.addChatMessage(new ChatComponentTranslation("duel.player.recieve"));
                                 DuelArena.arena.sendRequest((EntityPlayerMP) player, secondPlayer);
                                 playerFounded = true;

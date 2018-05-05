@@ -1,8 +1,6 @@
 package ru.flametaichou.duelarena.Model;
 
-import javax.vecmath.Point3d;
-
-public class ArenaPoint extends Point3d {
+public class ArenaPoint extends Point3D {
 
     private int id;
 

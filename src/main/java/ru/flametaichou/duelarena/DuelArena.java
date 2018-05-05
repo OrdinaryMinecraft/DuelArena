@@ -20,7 +20,6 @@ import ru.flametaichou.duelarena.Util.DatabaseHelper;
 public class DuelArena {
 
 	public static ArenaEntity arena;
-	public static DatabaseHelper database;
 	
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event)
@@ -35,12 +34,6 @@ public class DuelArena {
 	@EventHandler
 	public void load(FMLPreInitializationEvent event) {
 		ConfigHelper.setupConfig(new Configuration(event.getSuggestedConfigurationFile()));
-		String url = ConfigHelper.url;
-		String dbName = ConfigHelper.dbName;
-		String driver = ConfigHelper.driver;
-		String userName = ConfigHelper.userName;
-		String password = ConfigHelper.password;
-		database = new DatabaseHelper(url, dbName, driver, userName, password);
 	}
 	
 }
