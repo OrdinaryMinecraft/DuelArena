@@ -116,7 +116,7 @@ public class DatabaseHelper {
             ResultSet resultSet= statement.executeQuery();
 
             while (resultSet.next()) {
-                honorPoints.add(resultSet.getString("playername") + ": " + resultSet.getInt("points"));
+                honorPoints.add("- " + resultSet.getString("playername") + ": " + resultSet.getInt("points"));
             }
             closeConnection(dbConnection);
         } catch (SQLException e) {
