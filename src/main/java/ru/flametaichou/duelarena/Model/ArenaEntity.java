@@ -111,8 +111,8 @@ public class ArenaEntity {
             MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentTranslation("duelarena.logout", loosePlayer.getDisplayName()));
         }
 
-        this.setDuelTime(false);
         this.finishTime = MinecraftServer.getServer().getTickCounter();
+        this.setDuelTime(false);
     }
 
     public void duelEnd() {

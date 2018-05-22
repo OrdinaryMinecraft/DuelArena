@@ -15,8 +15,10 @@ public class ServerEventHandler {
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.world.getWorldTime() % 50 == 0) {
             if (DuelArena.arena.isBusy() && !DuelArena.arena.isDuelTime()) {
-                if (MinecraftServer.getServer().getTickCounter() - DuelArena.arena.getRequestTime() > ConfigHelper.timeout * 20) {
-                    DuelArena.arena.requestDenied();
+                if (DuelArena.arena.getFinishTime() == 0) {
+                    if (MinecraftServer.getServer().getTickCounter() - DuelArena.arena.getRequestTime() > ConfigHelper.timeout * 20) {
+                        DuelArena.arena.requestDenied();
+                    }
                 }
 
                 if (DuelArena.arena.getFinishTime() != 0) {
