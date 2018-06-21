@@ -14,6 +14,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import ru.flametaichou.duelarena.Util.ConfigHelper;
 import ru.flametaichou.duelarena.Util.DatabaseHelper;
+import ru.flametaichou.duelarena.Util.MyTeleporter;
+import ru.flametaichou.duelarena.Util.WorldUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,6 +35,7 @@ public class ArenaEntity {
     private long finishTime;
 
     public void sendRequest(EntityPlayerMP player1, EntityPlayerMP player2) {
+        this.finishTime = 0;
         this.setBusy(true);
         this.player1 = player1;
         this.player2 = player2;
@@ -144,6 +147,23 @@ public class ArenaEntity {
         }
     }
 
+    public void teleportPlayerFromArena(String playerName) {
+        initArenaWorld();
+        for (Map.Entry<String, Coordinates> playerOnArena : playersOnArena.entrySet()) {
+            if (playerOnArena.getKey().equals(playerName) && arenaWorld.getPlayerEntityByName(playerName) != null) {
+                EntityPlayerMP player = (EntityPlayerMP) arenaWorld.getPlayerEntityByName(playerName);
+
+                //player.travelToDimension(0);
+                //player.travelToDimension(arenaWorld.provider.dimensionId);
+                //player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnArena.getValue().getWorld().provider.dimensionId);
+                //player.playerNetServerHandler.setPlayerLocation(playerOnArena.getValue().x, playerOnArena.getValue().y, playerOnArena.getValue().z, player.rotationYaw, player.rotationPitch);
+                teleportToDimension(player, playerOnArena.getValue().getWorld().provider.dimensionId, playerOnArena.getValue().x, playerOnArena.getValue().y, playerOnArena.getValue().z);
+
+                playersOnArena.remove(playerName);
+            }
+        }
+    }
+
     public void clearArena() {
         this.setBusy(false);
         this.player1 = null;
@@ -188,7 +208,11 @@ public class ArenaEntity {
     public void teleportToDimension(EntityPlayerMP player, int dimensionId, int x, int y, int z) {
         boolean dimensionTeleport = dimensionId != player.getEntityWorld().provider.dimensionId;
         if(dimensionTeleport) {
-            player.travelToDimension(dimensionId);
+            World world = DimensionManager.getWorld(dimensionId);
+            MinecraftServer minecraftserver = MinecraftServer.getServer();m
+            WorldServer worldserver = minecraftserver.worldServerForDimension(world.provider.dimensionId);
+            WorldUtils.transferPlayerToDimension(player, dimensionId, new MyTeleporter(worldserver), minecraftserver);
+            //player.travelToDimension(dimensionId);
         }
         //player.rotationYaw = getRotationYaw(facing);
         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);

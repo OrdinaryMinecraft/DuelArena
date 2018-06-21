@@ -22,7 +22,7 @@ public class ServerEventHandler {
                 }
 
                 if (DuelArena.arena.getFinishTime() != 0) {
-                    if (MinecraftServer.getServer().getTickCounter() - DuelArena.arena.getFinishTime() > 10 * 20) {
+                    if (MinecraftServer.getServer().getTickCounter() - DuelArena.arena.getFinishTime() > (10 * 20)) {
                         DuelArena.arena.duelEnd();
                     }
                 }
@@ -51,7 +51,7 @@ public class ServerEventHandler {
     @SubscribeEvent
     public void onPlayerLogIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (DuelArena.arena.playersOnArena != null && !DuelArena.arena.playersOnArena.isEmpty()) {
-            DuelArena.arena.teleportPlayersFromArena();
+            DuelArena.arena.teleportPlayerFromArena(event.player.getDisplayName());
         }
     }
 
