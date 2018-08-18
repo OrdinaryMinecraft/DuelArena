@@ -12,10 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import ru.flametaichou.duelarena.Util.ConfigHelper;
-import ru.flametaichou.duelarena.Util.DatabaseHelper;
-import ru.flametaichou.duelarena.Util.MyTeleporter;
-import ru.flametaichou.duelarena.Util.WorldUtils;
+import ru.flametaichou.duelarena.Util.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -208,8 +205,9 @@ public class ArenaEntity {
     public void teleportToDimension(EntityPlayerMP player, int dimensionId, int x, int y, int z) {
         boolean dimensionTeleport = dimensionId != player.getEntityWorld().provider.dimensionId;
         if(dimensionTeleport) {
+            NetworkHandler.channel.sendTo(new MessageDimension(dimensionId), player);
             World world = DimensionManager.getWorld(dimensionId);
-            MinecraftServer minecraftserver = MinecraftServer.getServer();m
+            MinecraftServer minecraftserver = MinecraftServer.getServer();
             WorldServer worldserver = minecraftserver.worldServerForDimension(world.provider.dimensionId);
             WorldUtils.transferPlayerToDimension(player, dimensionId, new MyTeleporter(worldserver), minecraftserver);
             //player.travelToDimension(dimensionId);

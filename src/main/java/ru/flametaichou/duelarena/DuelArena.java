@@ -3,6 +3,7 @@ package ru.flametaichou.duelarena;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,12 +15,16 @@ import ru.flametaichou.duelarena.Handlers.ServerEventHandler;
 import ru.flametaichou.duelarena.Model.ArenaEntity;
 import ru.flametaichou.duelarena.Util.ConfigHelper;
 import ru.flametaichou.duelarena.Util.DatabaseHelper;
+import ru.flametaichou.duelarena.Util.NetworkHandler;
 
 @Mod (modid = "duelarena", name = "Duel Arena", version = "0.1", acceptableRemoteVersions = "*")
 
 public class DuelArena {
 
 	public static ArenaEntity arena;
+
+	@SidedProxy(serverSide = "ru.flametaichou.duelarena.CommonProxy", clientSide = "ru.flametaichou.duelarena.ClientProxy")
+	public static CommonProxy proxy;
 	
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event)
@@ -34,6 +39,8 @@ public class DuelArena {
 	@EventHandler
 	public void load(FMLPreInitializationEvent event) {
 		ConfigHelper.setupConfig(new Configuration(event.getSuggestedConfigurationFile()));
+		NetworkHandler.init();
+		proxy.preInit(event);
 	}
 	
 }
