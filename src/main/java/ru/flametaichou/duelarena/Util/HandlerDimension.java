@@ -8,6 +8,7 @@ import ru.flametaichou.duelarena.DuelArena;
 import ru.flametaichou.duelarena.Model.MessageDimension;
 
 public class HandlerDimension implements IMessageHandler<MessageDimension, IMessage> {
+
     @Override
     public IMessage onMessage(final MessageDimension message, MessageContext ctx) {
         DuelArena.proxy.addScheduledTask(new Runnable() {

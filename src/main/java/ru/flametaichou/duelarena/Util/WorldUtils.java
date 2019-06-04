@@ -39,6 +39,8 @@ public class WorldUtils {
             PotionEffect potioneffect = (PotionEffect)iterator.next();
             p_72356_1_.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(p_72356_1_.getEntityId(), potioneffect));
         }
+
+        p_72356_1_.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(p_72356_1_.experience, p_72356_1_.experienceTotal, p_72356_1_.experienceLevel));
         FMLCommonHandler.instance().firePlayerChangedDimensionEvent(p_72356_1_, j, p_72356_2_);
     }
 
